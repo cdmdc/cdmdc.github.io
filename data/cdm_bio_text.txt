@@ -1,0 +1,7 @@
+Christian D. Márton is a research scientist at Mount Sinai (Friedman Brain Institute), 
+where he works at the intersection of machine learning and computational neuroscience.
+He received his PhD in Bioengineering from Imperial College London in 2020, where he 
+was advised by Simon R. Schultz and Bruno B. Averbeck and funded by the Wellcome Trust.
+During this time, he was also a visiting research scientist at the NIMH/NIH, Bethesda, MD (USA) from 2017-2019. 
+He also holds a Masters in Bioengineering (Neurotechnology) from Imperial College London,
+and a Bachelors in Neuroscience from Princeton University.
