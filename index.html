@@ -85,8 +85,19 @@
         
             <tr onmouseout="NN2020_stop()" onmouseover="NN2020_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
-                <div class="one" id='NN2020_image'>
+                <div class="one" id='Neur2021_image'>
                     <img src='images/Fig1_2021TaskPrimitives.jpg' width="180">
+                </div>
+                <script type="text/javascript">
+                    function Neur2021_start() {
+                      document.getElementById('Neur2021_image').style.opacity = "1";
+                    }
+    
+                    function Neur2021_stop() {
+                      document.getElementById('Neur2021_image').style.opacity = "0";
+                    }
+                    Neur2021_stop()
+                  </script>
             </td>
             <td style="padding:20px;width:75%;vertical-align:middle">
                 <papertitle>Efficient and robust multi-task learning with modular task primitives.</papertitle>
