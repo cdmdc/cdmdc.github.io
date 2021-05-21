@@ -113,22 +113,21 @@
                 <br>
                 <p></p>
                 <p>
-                    In a real-world setting biological agents do not have infinite resources to acquire new skills. 
+                    In a real-world setting biological agents do not have infinite resources to learn new things. 
                     It is thus useful to recycle previously acquired knowledge in a way that allows for faster, 
                     less resource-intensive acquisition of multiple new skills. Neural networks in the brain are 
-                    likely not entirely re-trained with new tasks, unlike models, where efficient learning remains a 
-                    challenging problem in multi-task settings. In artificial networks, achieving high performance on 
-                    multiple tasks often requires expensive, repetitive computations, putting a high burden on computational 
-                    resources like energy and memory.  Here, we  leverage structural and functional inductive biases to
-                     develop a network that can learn multiple tasks efficiently. On nine different, commonly used 
-                     neuroscience paradigms, we show that a modular network endowed with task primitives allows for learning 
-                     multiple tasks well while keeping parameter counts low. We also show that the skills acquired with our 
-                     approach are more robust to a broad range of perturbations compared to those acquired with other 
-                     multi-task learning strategies. Taken together, our results suggest that combining structural and 
-                     functional inductive biases in a recurrently connected network allows learning multiple tasks more 
-                     efficiently and robustly. This work offers a new perspective on achieving efficient multi-task learning
-                      in the brain, and makes predictions for novel neuroscience experiments in which targeted perturbations 
-                      are employed to explore the solution space.
+                    likely not entirely re-trained with new tasks, but how they leverage existing computations to 
+                    learn new ones is not well understood. In this work, we study this question in artificial neural 
+                    networks trained on commonly used neuroscience paradigms. Building on recent work from the 
+                    multi-task learning literature, we propose two ingredients: (1) network modularity, and (2) 
+                    learning task primitives. Together, these ingredients form inductive biases we call structural 
+                    and functional, respectively. Using a corpus of nine different tasks, we show that a modular network
+                    endowed with task primitives allows for learning multiple tasks well while keeping parameter counts,
+                    and updates, low. We also show that the skills acquired with our approach are more robust to a broad 
+                    range of perturbations compared to those acquired with other multi-task learning strategies. 
+                    This work offers a new perspective on achieving efficient multi-task learning in the brain, 
+                    and makes predictions for novel neuroscience experiments in which targeted perturbations are employed 
+                    to explore solution spaces.
                 </p>
             </td>
             </tr> 
