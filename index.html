@@ -101,7 +101,7 @@
                       </script>
                 </td>
                 <td style="padding:20px;width:75%;vertical-align:middle">
-                    <papertitle>TRAKR - A reservoir-based tool for fast and accurate classification of time-series patterns</papertitle>
+                    <papertitle>Reservoir-based tracking (TRAKR) for one-shot classification of neural time-series patterns</papertitle>
                     <br>
                     <a>Furqan Afzal</a><sup>*</sup>,
                     <strong>CD Márton</strong><sup>*</sup>,
@@ -118,9 +118,9 @@
                         These include detecting anomalous clinical events such as seizures in epilepsy, and 
                         identifying optimal control spaces for brain machine interfaces. It remains challenging to 
                         correctly distinguish nonlinear time-series patterns because of the high intrinsic dimensionality 
-                        of such data. We introduce a reservoir-based tool, state tracker (TRAKR), which offers the high 
-                        accuracy of ensembles or deep supervised methods while preserving the computational benefits of 
-                        simple distance metrics.
+                        of such data. We introduce a reservoir-based tool, state tracker (TRAKR), which provides the 
+                        high accuracy of ensembles or deep supervised methods while preserving the benefits of 
+                        simple distance metrics in being applicable to single examples of training data (one-shot classification). 
                     </p> 
                 </td>
                 </tr> 
@@ -144,7 +144,7 @@
                   </script>
             </td>
             <td style="padding:20px;width:75%;vertical-align:middle">
-                <papertitle>Efficient and robust multi-task learning in the brain with modular task primitives.</papertitle>
+                <papertitle>Efficient and robust multi-task learning in the brain with modular latent primitives.</papertitle>
                 <br>
                 <strong>CD Márton</strong>,
                 <a href="https://www.guillaumelajoie.com/">Guillaume Lajoie</a>,
@@ -153,12 +153,17 @@
                 <a href="https://arxiv.org/abs/2105.14108">arXiv</a>, 2021
                 <br>
                 <p>
-                    In a real-world setting biological agents do not have infinite resources to learn new things. 
-                    It is thus useful to recycle previously acquired knowledge in a way that allows for faster, 
-                    less resource-intensive acquisition of multiple new skills. Neural networks in the brain are 
-                    likely not entirely re-trained with new tasks, but how they leverage existing computations to 
-                    learn new ones is not well understood. In this work, we study this question in artificial neural 
-                    networks trained on commonly used neuroscience paradigms. 
+                    Biological agents do not have infinite resources to learn new things. 
+                    For this reason, a central aspect of human learning is the ability to recycle previously acquired 
+                    knowledge in a way that allows for faster, less resource-intensive acquisition of new skills.
+                    In spite of that, how neural networks in the brain leverage existing knowledge to learn new computations 
+                    is not well understood. In this work, we study this question in artificial recurrent neural networks (RNNs) 
+                    trained on a corpus of commonly used neuroscience tasks. Combining brain-inspired inductive biases we call 
+                    functional and structural, we propose a system that learns new tasks by building on top of pre-trained 
+                    latent dynamics organised into separate recurrent modules. The resulting model, we call a Modular Latent Primitives 
+                    (MoLaP) network, allows for learning multiple tasks effectively while keeping parameter counts, and updates, low.
+                    We also show that the skills acquired with our approach are more robust to a broad range of perturbations 
+                    compared to those acquired with other multi-task learning strategies, and that generalisation to new tasks is facilitated. 
                 </p>
             </td>
             </tr> 
