@@ -65,7 +65,23 @@
               </p>
             </td>
             <td style="padding:2.5%;width:40%;max-width:40%">
-              <a href="images/ME_NEW_26.jpeg"><img style="width:100%;max-width:100%" alt="profile photo" src="images/ME_NEW_26.jpeg" class="hoverZoomLink"></a>
+              <a href="images/ME_NEW_26.jpeg">
+                <div class="animated-frame-container" id="profile-image-container">
+                  <svg class="frame-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <!-- Simple gold border - positioned at edges to wrap around image -->
+                    <rect class="baroque-border animated-stroke" 
+                          x="0" y="0" width="100" height="100" 
+                          rx="2" ry="2"
+                          stroke-dasharray="400" 
+                          stroke-dashoffset="400" />
+                  </svg>
+                  <img style="width:100%;max-width:100%" 
+                       alt="profile photo" 
+                       src="images/ME_NEW_26.jpeg" 
+                       class="hoverZoomLink profile-image"
+                       id="profile-image">
+                </div>
+              </a>
             </td>
           </tr>
         </tbody></table>
@@ -683,6 +699,177 @@
       </td>
     </tr>
   </table>
+
+  <!-- Optimized Cursor Tracking JavaScript -->
+  <script>
+  (function() {
+    'use strict';
+    
+    // Early exit checks (performance optimization)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (isTouchDevice || prefersReducedMotion) return;
+    
+    // Configuration
+    const CONFIG = {
+      maxTilt: 12,        // Maximum rotation in degrees
+      easing: 0.15,      // Smoothing factor (0-1, lower = smoother)
+      scaleOnHover: 1.05, // Scale factor on hover
+      resetOnLeave: true  // Reset position when mouse leaves
+    };
+    
+    // Get elements (optimized - no wrapper div needed)
+    const container = document.getElementById('profile-image-container');
+    const profileImage = document.getElementById('profile-image');
+    
+    if (!container || !profileImage) {
+      return; // Exit if elements not found
+    }
+    
+    // State variables
+    let currentRotateX = 0, currentRotateY = 0;
+    let targetRotateX = 0, targetRotateY = 0;
+    let animationFrameId = null;
+    let rafId = null;
+    let lastMouseEvent = null;
+    
+    // Cached rect for performance (critical optimization)
+    let cachedRect = null;
+    let rectCacheTime = 0;
+    const RECT_CACHE_DURATION = 100; // ms
+    
+    /**
+     * Get cached bounding rect (recalculates only when needed)
+     */
+    function getCachedRect() {
+      const now = performance.now();
+      if (!cachedRect || (now - rectCacheTime) > RECT_CACHE_DURATION) {
+        cachedRect = container.getBoundingClientRect();
+        rectCacheTime = now;
+      }
+      return cachedRect;
+    }
+    
+    /**
+     * Calculate rotation based on mouse position
+     */
+    function calculateRotation(e) {
+      const rect = getCachedRect(); // Use cached rect
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      // Calculate distance from center (normalized to -1 to 1)
+      const deltaX = (e.clientX - centerX) / (rect.width / 2);
+      const deltaY = (e.clientY - centerY) / (rect.height / 2);
+      
+      // Convert to rotation angles
+      targetRotateY = deltaX * CONFIG.maxTilt;
+      targetRotateX = -deltaY * CONFIG.maxTilt; // Negative for natural tilt
+    }
+    
+    /**
+     * Smooth interpolation between current and target values (optimized)
+     */
+    let isHovering = false;
+    
+    function smoothUpdate() {
+      const prevX = currentRotateX, prevY = currentRotateY;
+      
+      // Linear interpolation (lerp)
+      currentRotateX += (targetRotateX - currentRotateX) * CONFIG.easing;
+      currentRotateY += (targetRotateY - currentRotateY) * CONFIG.easing;
+      
+      // Check if actually changed (account for floating point precision)
+      const changed = Math.abs(currentRotateX - prevX) > 0.001 || 
+                      Math.abs(currentRotateY - prevY) > 0.001;
+      
+      if (changed || isHovering) {
+        // Apply transform directly to image (no wrapper div)
+        // Only apply scale when hovering to avoid double frame effect
+        const scale = isHovering ? CONFIG.scaleOnHover : 1;
+        profileImage.style.transform = 
+          `rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) scale(${scale})`;
+        
+        // Continue only if not at target or if hovering
+        if (Math.abs(targetRotateX - currentRotateX) > 0.01 || 
+            Math.abs(targetRotateY - currentRotateY) > 0.01 ||
+            isHovering) {
+          animationFrameId = requestAnimationFrame(smoothUpdate);
+        } else {
+          animationFrameId = null; // Explicitly clear
+        }
+      } else {
+        animationFrameId = null; // Stop if no change
+      }
+    }
+    
+    /**
+     * Start smooth animation loop
+     */
+    function startAnimation() {
+      if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(smoothUpdate);
+      }
+    }
+    
+    /**
+     * Reset to center position
+     */
+    function resetPosition() {
+      targetRotateX = targetRotateY = 0;
+      isHovering = false;
+      startAnimation();
+    }
+    
+    /**
+     * Handle mouse enter
+     */
+    function handleMouseEnter() {
+      isHovering = true;
+      startAnimation();
+    }
+    
+    /**
+     * RAF-based throttled mousemove handler (optimized)
+     */
+    function handleMouseMove(e) {
+      lastMouseEvent = e; // Store latest event
+      
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          if (lastMouseEvent) {
+            calculateRotation(lastMouseEvent);
+            startAnimation();
+          }
+          rafId = null;
+        });
+      }
+    }
+    
+    /**
+     * Invalidate cached rect (called on resize/scroll)
+     */
+    function invalidateRect() {
+      cachedRect = null;
+    }
+    
+    // Event listeners (using passive where possible)
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
+    container.addEventListener('mouseenter', handleMouseEnter, { passive: true });
+    
+    if (CONFIG.resetOnLeave) {
+      container.addEventListener('mouseleave', resetPosition, { passive: true });
+    }
+    
+    // Cache invalidation on layout changes
+    window.addEventListener('resize', invalidateRect, { passive: true });
+    window.addEventListener('scroll', invalidateRect, { passive: true });
+    
+    // Initialize
+    resetPosition();
+  })();
+  </script>
 </body>
 
 </html>

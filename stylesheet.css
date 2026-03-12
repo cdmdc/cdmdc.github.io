@@ -129,3 +129,152 @@ name {
 span.highlight {
   background-color: #ffffd0;
 }
+
+/* ============================================
+   Silver Baroque Frame & Cursor Tracking Styles
+   ============================================ */
+
+/* Container Styling (Optimized) */
+.animated-frame-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  /* Add padding to create space for frame outside image */
+  padding: 12px;
+  /* Perspective moved to CSS for better performance */
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+
+/* SVG Frame Overlay - positioned outside image */
+.frame-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow clicks to pass through */
+  z-index: 1;
+  opacity: 0;
+  animation: frameEntrance 1.2s ease-out 0.3s forwards;
+}
+
+/* Simple gold frame styling */
+.frame-overlay rect {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Main gold frame border - single color */
+.frame-overlay .baroque-border {
+  stroke: #D4AF37; /* Classic gold color */
+  stroke-width: 4;
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.5));
+}
+
+/* Entrance Animation */
+@keyframes frameEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animated Stroke CSS for Baroque Frame */
+.animated-stroke {
+  animation: drawBaroqueFrame 2s ease-out 0.5s forwards;
+}
+
+@keyframes drawBaroqueFrame {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Removed corner and scrollwork animations - simple frame only */
+
+/* Hover Effects (Gold) - No scale to avoid conflict with cursor tracking */
+.animated-frame-container:hover .frame-overlay {
+  opacity: 1;
+  /* Removed scale transform to prevent double frame effect */
+  transition: opacity 0.3s ease-out, filter 0.3s ease-out;
+  filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.6));
+}
+
+.animated-frame-container:hover .frame-overlay .baroque-border {
+  stroke: #FFD700; /* Brighter gold on hover */
+  filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.5));
+}
+
+/* Removed hover scale on image - cursor tracking handles scaling */
+
+/* Profile Image Styling (Optimized - Direct Transform) */
+.profile-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Position image inside frame - add margin to create space for frame */
+  margin: 0;
+  position: relative;
+  z-index: 0;
+  /* 3D transform applied directly to image (no wrapper needed) */
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden; /* Prevents flickering */
+  transition: transform 0.1s ease-out;
+}
+
+/* Responsive Considerations */
+@media (max-width: 768px) {
+  .frame-overlay {
+    stroke-width: 0.8; /* Slightly thinner on mobile for Baroque frame */
+  }
+  
+  .animated-frame-container:hover .frame-overlay {
+    transform: scale(1.01); /* Subtler hover on mobile */
+  }
+  
+  /* Disable 3D transforms on mobile for performance */
+  .profile-image {
+    transform: none !important;
+  }
+  
+  /* Simplify Baroque frame on mobile */
+  .baroque-scroll {
+    opacity: 0.6; /* Less prominent scrollwork */
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .frame-overlay {
+    animation: none;
+    opacity: 0.7;
+  }
+  
+  .animated-stroke {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  
+  .baroque-corner,
+  .baroque-scroll {
+    animation: none;
+    opacity: 0.85;
+  }
+  
+  .profile-image {
+    transform: none !important;
+    transition: none !important;
+  }
+}
